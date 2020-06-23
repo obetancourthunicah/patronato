@@ -1,5 +1,6 @@
 // Primero obtenemos la clase de la base de datos. (Singleton)
 const db = require('../../dao/db');
+const ObjectId = require('mongodb').ObjectId;
 
 // Definimos Variables que contendran punteros hacia las colecciones
 let cuentasColl; // VB Variable Globales | Cloujure
@@ -21,11 +22,16 @@ module.exports = class {
   }
 
   static async getAll(){
-    if(cuentasColl){
-      let registro = await cuentasColl.find();
-      return registro.toArray();
+    try{
+      if(cuentasColl){
+        let registro = await cuentasColl.find();
+        return registro.toArray();
+      }
+      return [];
+    } catch(err){
+      console.log(err);
+      return err;
     }
-    return [];
   }
 
   static async addOne( cuenta, nombre ) {
@@ -39,4 +45,25 @@ module.exports = class {
     }
   }
 
+  static async getOne(id) {
+    try {
+      let filter = { "_id": new ObjectId(id)};
+      const result = await cuentasColl.findOne(filter);
+      return result;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
+  static async getByCuenta(cuenta) {
+    try {
+      let filter = { "cuenta": cuenta };
+      const result = await cuentasColl.findOne(filter);
+      return result;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
 } //class
