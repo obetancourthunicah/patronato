@@ -50,4 +50,32 @@ router.post('/new', async (req, res)=>{
   }
 });// post /new
 
+router.put('/like/:id', async (req, res)=>{
+  try{
+    let { id } = req.params;
+    const rlst = await model.like(id);
+    res.status(200).json(rlst);
+  }catch(err){
+    console.log(err);
+    res.status(500).json({ "Error": "Algo Sucedio Mal intentar de nuevo." });
+  }
+});
+
+router.put('/dislike/:id', async (req, res) => {
+  try {
+    let { id } = req.params;
+    const rlst = await model.dislike(id);
+    res.status(200).json(rlst);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ "Error": "Algo Sucedio Mal intentar de nuevo." });
+  }
+});
+
+router.get('/alumnos/cuenta/top10', async (req, res)=>{
+  res.status(403).json({"msg":"No Implementado"})
+}); // get top10
+
+
+
 module.exports = router;

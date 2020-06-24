@@ -65,5 +65,30 @@ module.exports = class {
       console.log(err);
       return err;
     }
+  } //get by Cuenta
+
+  static async like(id) {
+    try {
+      let filter = {"_id": new ObjectId(id)};
+      let update = {"$inc":{"like":1}, "$set":{"last_modified": new Date().getTime()}};
+      const result = await cuentasColl.updateOne(filter,update);
+      return result;
+    }catch(err){
+      console.log(err);
+      return err;
+    }
   }
+
+  static async dislike(id) {
+    try {
+      let filter = { "_id": new ObjectId(id) };
+      let update = { "$inc": { "dislike": 1 }, "$set": { "last_modified": new Date().getTime() } };
+      const result = await cuentasColl.updateOne(filter, update);
+      return result;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
 } //class
