@@ -89,6 +89,40 @@ module.exports = class {
       console.log(err);
       return err;
     }
+  } //dislike
+
+  static async deleteOne(id){
+    try{
+      let filter = {"_id": new ObjectId(id)};
+      const result = await cuentasColl.deleteOne(filter);
+      return result;
+    }catch(err){
+      console.log(err);
+      return err;
+    }
   }
+
+  static async getWarningAlumnos(){
+    try { 
+      let filter = {"dislike": {"$gt":3}};
+      const cursor = await cuentasColl.find(filter);
+      const arrCuentas = await cursor.toArray();
+      return arrCuentas;
+    } catch (err){
+      console.log(err);
+      return err;
+    }
+
+  }
+
+  /*
+  $lt
+  $lte
+  $gt
+  $gte
+  $ne
+  $or
+
+  */ 
 
 } //class

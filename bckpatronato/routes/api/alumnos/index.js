@@ -72,9 +72,26 @@ router.put('/dislike/:id', async (req, res) => {
   }
 });
 
-router.get('/alumnos/cuenta/top10', async (req, res)=>{
-  res.status(403).json({"msg":"No Implementado"})
-}); // get top10
+router.delete ('/del/:id', async (req, res)=>{
+  try {
+      const {id} = req.params;
+      const result = await model.deleteOne(id);
+      res.status(200).json(result);
+  }catch(err){
+    console.log(err);
+    res.status(500).json({ "Error": "Algo Sucedio Mal intentar de nuevo." });
+  }
+});
+
+router.get('/warn', async (req, res)=>{
+  try{
+    let result = await model.getWarningAlumnos();
+    res.status(200).json(result);
+  }catch(err){
+    console.log(err);
+    res.status(500).json({ "Error": "Algo Sucedio Mal intentar de nuevo." });
+  }
+})
 
 
 
