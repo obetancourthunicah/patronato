@@ -121,8 +121,9 @@ module.exports = class {
   $gt
   $gte
   $ne
-  $or
-
+  $or []
+  $and []
+  :
   */ 
 
 } //class
