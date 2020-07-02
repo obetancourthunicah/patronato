@@ -2,6 +2,13 @@
 var express = require('express');
 var router = express.Router();
 
+let secModel = require('./sec.model');
+
+let  init = async ()=>{
+  await secModel.initModel();
+}
+init();
+
 router.get('/', function (req, res) {
   res.status(200).json(
     [
