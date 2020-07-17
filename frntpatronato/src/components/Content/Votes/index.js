@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import Page from '../../Page';
+import {NavLinkBtn} from '../../Button';
+
+import './votes.css';
+
 import VotingDeck from './VotingDeck';
 export default class extends Component {
   constructor(){
@@ -33,6 +37,7 @@ export default class extends Component {
          <p>No: {this.state.countNo}</p>
          <p>Abstener: {this.state.countAbstener}</p>
         </section>
+        <NavLinkBtn toLink="/" className="btnBack">Regresar</NavLinkBtn>
       </Page>
     );
   }
