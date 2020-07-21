@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Page from '../../Page';
+
+import { getMocion } from './actions';
 export default class extends Component {
   constructor(){
     super();
@@ -11,6 +13,14 @@ export default class extends Component {
   }
   onClickButton(e){
     this.setState({click:(this.state.click + 1)});
+  }
+  async componentDidMount(){
+    try{
+      let apiReturns = await getMocion();
+      console.log(apiReturns.data);
+    }catch (e){
+      console.log(e);
+    }
   }
   render(){
     return (
