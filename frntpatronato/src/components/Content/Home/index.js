@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Page from '../../Page';
 
-import { getMocion } from './actions';
+import { getMocion, getPrivateMocion } from './actions';
 export default class extends Component {
   constructor(){
     super();
@@ -18,6 +18,8 @@ export default class extends Component {
     try{
       let apiReturns = await getMocion();
       console.log(apiReturns.data);
+      let pApiReturn = await getPrivateMocion();
+      console.log(pApiReturn.data);
     }catch (e){
       console.log(e);
     }
