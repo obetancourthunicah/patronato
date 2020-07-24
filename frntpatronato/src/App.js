@@ -1,11 +1,16 @@
 import React , {Component} from 'react';
-import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
+import {Switch, BrowserRouter as Router} from 'react-router-dom';
+import PRoute from './utilities/privateroutes';
+import NRoute from './utilities/normalroutes';
 
 import {setJWT, getLocalStorage, setLocalStorage} from './utilities/axios';
 
 import './App.css';
 
+
+
 import Home from './components/Content/Home';
+import Login from './components/Content/LogIn';
 import SignIn from './components/Content/SignIn';
 import Votes from './components/Content/Votes';
 
@@ -22,14 +27,45 @@ export default class extends Component{
       setJWT(this.state.jwt);
       this.state.isLogged = true;
     }
+    this.setLogginData = this.setLogginData.bind(this);
+    this.setLoggoutData = this.setLoggoutData.bind(this);
+  }
+  setLogginData(user, jwt){
+    this.setState({
+      ...this.state,
+      user:user,
+      jwt:jwt,
+      isLogged:true,
+      },
+      () => {
+        setLocalStorage('jwt', jwt);
+        setLocalStorage('user', user);
+        setJWT(jwt);}
+    );
+  }
+  setLoggoutData(){
+    this.setState(
+      {
+        ...this.state,
+        user:"",
+        jwt:""
+      },
+      ()=>{setJWT('')}
+    )
   }
   render() {
+    const auth = {
+      isLogged : this.state.isLogged,
+      login: this.setLogginData,
+      logout: this.setLoggoutData,
+    }
     return (
       <Router>
         <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/votes" component={Votes} exact />
-            <Route path="/signin" component={SignIn} exact />
+          <NRoute path="/" component={Home} exact auth={auth}/>
+          <NRoute path="/login" component={Login} exact auth={auth}/>
+          <NRoute path="/signin" component={SignIn} exact auth={auth} />
+          <PRoute path="/votes" component={Votes} exact auth={auth} />
         </Switch>
       </Router>
     );
