@@ -28,6 +28,7 @@ export default class extends Component {
         title="Mociones por Votar"
         showHeader={true}
         showFooter={false}
+        auth={this.props.auth}
       >
         <VotingDeck rsmHandler={this.addToCounter} title="Ingreso por Medio de RFID"></VotingDeck>
         <VotingDeck rsmHandler={this.addToCounter} title="Modernización de Parque"></VotingDeck>

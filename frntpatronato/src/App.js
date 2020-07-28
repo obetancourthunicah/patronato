@@ -13,6 +13,7 @@ import Home from './components/Content/Home';
 import Login from './components/Content/LogIn';
 import SignIn from './components/Content/SignIn';
 import Votes from './components/Content/Votes';
+import Alumnos from './components/Content/Alumnos/alumnos';
 
 export default class extends Component{
   constructor (){
@@ -66,6 +67,7 @@ export default class extends Component{
           <NRoute path="/login" component={Login} exact auth={auth}/>
           <NRoute path="/signin" component={SignIn} exact auth={auth} />
           <PRoute path="/votes" component={Votes} exact auth={auth} />
+          <PRoute path="/alumnos" component={Alumnos} exact auth={auth} />
         </Switch>
       </Router>
     );

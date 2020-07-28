@@ -42,6 +42,7 @@ export default class extends Component {
         showHeader={true}
         showFooter={true}
         title={"Iniciar Sesión"}
+        auth = {this.props.auth}
       >
         <h2>Iniciar Sesión</h2>
         <fieldset>

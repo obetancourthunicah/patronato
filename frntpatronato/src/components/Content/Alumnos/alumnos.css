@@ -1,0 +1,22 @@
+.listholder {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px);
+}
+.listItem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding:0.5em;
+  background-color:#eee;
+  border-bottom: 1px solid #333;
+  min-height:2em;
+  margin-left:-1em;
+  margin-right:-1em;
+  align-items: center;
+}
+
+.listItem b:first-child{
+  width:40%;
+  font-size: 0.8em;
+}

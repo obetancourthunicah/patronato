@@ -6,16 +6,31 @@ import { FaUserPlus, FaAngellist } from 'react-icons/fa';
 
 import './footer.css';
 
-export default ()=>{
-  return (
-    <footer>
-      <nav>
-        <ul>
-          <li><NavLink to="/" ><MdHome size="2em"/></NavLink></li>
-          <li><NavLink to="/signin"><FaUserPlus size="2em"/></NavLink></li>
-          <li><NavLink to="/votes"><FaAngellist size="2em"/></NavLink></li>
-        </ul>
-      </nav>
-    </footer>
-  );
+export default ({ auth } )=>{
+  if (auth.isLogged && true){
+    return (
+      <footer>
+        <nav>
+          <ul>
+            <li><NavLink to="/" ><MdHome size="2em" /></NavLink></li>
+            <li><NavLink to="/votes">Votos</NavLink></li>
+            <li><NavLink to="/alumnos">Alms</NavLink></li>
+          </ul>
+        </nav>
+      </footer>
+    )
+
+  }else {
+    return (
+      <footer>
+        <nav>
+          <ul>
+            <li><NavLink to="/" ><MdHome size="2em"/></NavLink></li>
+            <li><NavLink to="/signin"><FaUserPlus size="2em"/></NavLink></li>
+            <li><NavLink to="/login"><FaUserPlus size="2em" /></NavLink></li>
+          </ul>
+        </nav>
+      </footer>
+    );
+  }
 }
