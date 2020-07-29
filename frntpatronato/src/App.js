@@ -3,7 +3,7 @@ import {Switch, BrowserRouter as Router} from 'react-router-dom';
 import PRoute from './utilities/privateroutes';
 import NRoute from './utilities/normalroutes';
 
-import {setJWT, getLocalStorage, setLocalStorage} from './utilities/axios';
+import {setJWT, getLocalStorage, setLocalStorage, setUnAuthInterceptor} from './utilities/axios';
 
 import './App.css';
 
@@ -30,6 +30,12 @@ export default class extends Component{
     }
     this.setLogginData = this.setLogginData.bind(this);
     this.setLoggoutData = this.setLoggoutData.bind(this);
+    
+    setUnAuthInterceptor(this.setLoggoutData)
+  }
+
+  componentDidMount(){
+    this.setState({"loadingBackend":true});
   }
   setLogginData(user, jwt){
     this.setState({
@@ -45,16 +51,30 @@ export default class extends Component{
     );
   }
   setLoggoutData(){
-    this.setState(
-      {
+    if(this.state.loadingBackend){
+      this.setState(
+        {
+          ...this.state,
+          user:"",
+          jwt:"",
+          isLogged:false,
+        },
+        ()=>{setJWT('')}
+      )
+    }else{
+      this.state = {
         ...this.state,
-        user:"",
-        jwt:""
-      },
-      ()=>{setJWT('')}
-    )
+        user: "",
+        jwt: "",
+        isLogged: false,
+      }
+      setJWT('')
+    }
   }
   render() {
+    if (!this.state.loadingBackend){
+      return (<div className="splash"> ...Loading </div>)
+    }
     const auth = {
       isLogged : this.state.isLogged,
       login: this.setLogginData,

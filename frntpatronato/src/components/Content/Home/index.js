@@ -14,16 +14,7 @@ export default class extends Component {
   onClickButton(e){
     this.setState({click:(this.state.click + 1)});
   }
-  async componentDidMount(){
-    try{
-      let apiReturns = await getMocion();
-      console.log(apiReturns.data);
-      let pApiReturn = await getPrivateMocion();
-      console.log(pApiReturn.data);
-    }catch (e){
-      console.log(e);
-    }
-  }
+  
   render(){
     return (
       <Page

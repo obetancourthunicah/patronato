@@ -15,6 +15,30 @@ export const setJWT = (jwt)=>{
   //todo: set jwt to axios private instance
 }
 
+export const setUnAuthInterceptor =  ( logoutHandler)=>{
+  privateaxios.interceptors.response.use(
+    (response)=>{
+      return response;
+    },
+    (error)=>{
+      console.log(error);
+      if(error.response){
+        switch(error.response.status){
+          case 401:
+            logoutHandler();
+            break;
+          default:
+            console.log(error);
+        }
+      }else{
+        console.log(error);
+      }
+      return Promise.reject(error);
+    }
+  )
+}
+
+
 export const naxios = publicaxios;
 export const paxios = privateaxios;
 
