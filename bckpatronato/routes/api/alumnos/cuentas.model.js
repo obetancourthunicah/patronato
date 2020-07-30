@@ -34,6 +34,25 @@ module.exports = class {
     }
   }
 
+  static async getFacet(page, poolNumber) {
+    try {
+      if (cuentasColl) {
+        
+        let registro = await cuentasColl.find();
+        let totalDocs = await registro.count();
+        const limiteInferior = page * poolNumber;
+        registro.skip(limiteInferior);
+        registro.limit(poolNumber);
+        const alumnos = await registro.toArray();
+        return {alumnos:alumnos, total:totalDocs};
+      }
+      return { alumnos: [], total: 0};
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
   static async addOne( cuenta, nombre ) {
     try{
       const newAlumno = {cuenta:cuenta, nombre:nombre};

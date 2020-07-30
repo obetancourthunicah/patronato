@@ -17,6 +17,18 @@ router.get('/', async (req, res)=>{
   }
 }); // get /
 
+router.get('/facet/:page/:items' , async (req, res)=>{
+  try{
+    const {page, items} = req.params;
+    let facetResult = await model.getFacet(parseInt(page), parseInt(items));
+    console.log(facetResult);
+    res.status(200).json(facetResult);
+  }catch(e){
+    console.log(err);
+    res.status(500).json({ "Error": "Algo Sucedio Mal intentar de nuevo." });
+  }
+});
+
 router.get('/one/:id', async (req, res)=>{
   try{
       let {id} = req.params;
@@ -38,6 +50,8 @@ router.get('/cuenta/:cuenta', async (req, res) => {
     res.status(500).json({ "Error": "Algo Sucedio Mal intentar de nuevo." });
   }
 }); //get one
+
+
 
 router.post('/new', async (req, res)=>{
   try {

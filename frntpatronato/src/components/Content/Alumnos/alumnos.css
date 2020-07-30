@@ -1,22 +1,24 @@
 .listholder {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 100px);
+  height: calc(100vh - 122px);
+  margin-left: -1em;
+  margin-right: -1em;
+  margin-bottom: 67px;
+  margin-top:-4px;
+  overflow: auto;
 }
-.listItem{
+.listItem {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding:0.5em;
-  background-color:#eee;
+  padding: 0.5em;
+  background-color: #eee;
   border-bottom: 1px solid #333;
-  min-height:2em;
-  margin-left:-1em;
-  margin-right:-1em;
+  min-height: 2em;
   align-items: center;
 }
-
-.listItem b:first-child{
-  width:40%;
+.listItem b:first-child {
+  width: 40%;
   font-size: 0.8em;
 }

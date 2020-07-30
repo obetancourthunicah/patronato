@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Page from '../../Page';
-
+import InfiniteScroll from 'react-infinite-scroller';
 import './alumnos.css';
 
-import {obtenerAlumnos} from './actions';
+import {obtenerAlumnosFacet} from './actions';
 import { NavLink } from 'react-router-dom';
 import { IoIosInformationCircle } from 'react-icons/io'
 export default class extends Component{
@@ -11,15 +11,36 @@ export default class extends Component{
     super();
     this.state = {
       alumnos : [],
+      hasMore : true,
+      page:1,
+      itemToLoad: 15,
       loading: true,
     }
+    this.loadMore = this.loadMore.bind(this);
   }
-  async componentDidMount(){
-    try {
-      let alumnos = await obtenerAlumnos();
-       this.setState({...this.state, alumnos: alumnos});
+  async loadMore(pageToLoad){
+    try{
+      let result = await obtenerAlumnosFacet(pageToLoad,this.state.itemToLoad);
+      console.log(result);
+      if(result.total > 0){
+        let newAlumnos = this.state.alumnos.concat(result.alumnos);
+        this.setState(
+          {
+            ...this.state,
+            alumnos:newAlumnos,
+            hasMore: (pageToLoad * this.state.itemToLoad < result.total)
+          }
+        )
+      } else {
+        this.setState(
+          {hasMore:false}
+        )
+      }
+
     }catch(e){
-      console.log(e);
+      this.setState(
+        { hasMore: false }
+      )
     }
   }
   render(){
@@ -36,8 +57,18 @@ export default class extends Component{
         title={"Alumnos"}
         auth={this.props.auth}
       >
-      <section className="listholder">
-          {alumnosListItem}
+      <section className="listholder" ref={(ref)=>this.scrollParentRef = ref}>
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={this.loadMore}
+            hasMore={this.state.hasMore}
+            useWindow={false}
+            getScrollParent={()=>this.scrollParentRef}
+            loader={<div key={"Item0NotFound"} className="listItem">Loading ..</div>}
+          >
+            {alumnosListItem}
+          </InfiniteScroll>
+          
       </section>
       </Page>
     );
