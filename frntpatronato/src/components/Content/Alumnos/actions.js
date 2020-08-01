@@ -20,6 +20,15 @@ export const obtenerAlumnosFacet = async (_page, items) => {
   }
 }
 
+export const obtenerAlumnoById = async (id) => {
+  try {
+    let { data } = await paxios.get(`/api/alumnos/one/${id}`);
+    return data;
+  } catch (e) {
+    throw (e);
+  }
+}
+
 export const nuevoAlumno = async()=>{
   try{
     let { data } = await paxios.post("url", {cuenta:"","nombre":""});
